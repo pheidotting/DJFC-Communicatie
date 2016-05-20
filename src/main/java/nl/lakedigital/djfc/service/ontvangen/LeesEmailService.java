@@ -170,14 +170,8 @@ public class LeesEmailService {
 
             emailFolder.close(true);
             store.close();
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("{}", e);
         }
 
         return lijst;

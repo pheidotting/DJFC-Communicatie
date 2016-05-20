@@ -130,9 +130,9 @@ public class EmailVerzendService extends AbstractVerzendService {
             uitgaandeEmail.setDatumTijdVerzending(LocalDateTime.now());
             uitgaandeEmail.setOnverzondenIndicatie(null);
         } catch (NoSuchProviderException e) {
-            e.printStackTrace();
+            LOGGER.error("{}", e);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            LOGGER.error("{}", e);
         }
 
     }

@@ -3,7 +3,8 @@ package nl.lakedigital.djfc.service;
 
 import com.lowagie.text.DocumentException;
 import nl.lakedigital.djfc.client.oga.BijlageClient;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
 @Service
 public class HtmlToPdfConversieService {
     private StringBuffer stringBufferOfData;
-    private final static Logger LOGGER = Logger.getLogger(HtmlToPdfConversieService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(HtmlToPdfConversieService.class);
 
     private BijlageClient bijlageClient=new BijlageClient();
 
@@ -37,13 +38,13 @@ public class HtmlToPdfConversieService {
             os.close();
             os = null;
         } catch (IOException | DocumentException e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error("{}", e);
         } finally {
             if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
-                    // ignore
+                    LOGGER.error("{}", e);
                 }
             }
         }

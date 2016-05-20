@@ -61,7 +61,7 @@ public class LeesEnVerwerkEmailService {
                         ((IngaandeEmail) communicatieProduct).setExtraInformatie(null);
                     }
                     }catch(UnsupportedEncodingException e){
-
+                        LOGGER.error("{}", e);
                     }
                 }
                 communicatieProducten.add(communicatieProduct);
