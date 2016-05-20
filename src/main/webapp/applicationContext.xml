@@ -19,12 +19,12 @@
         <!--<property name="maxPoolSize" value="30" />-->
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 
-        <!--<property name="url" value="jdbc:mysql://localhost:3310/test"/>-->
-        <!--<property name="username" value=""/>-->
-        <!--<property name="password" value=""/>-->
-        <property name="url" value="jdbc:mysql://89.18.180.239:3306/djfc_comm"/>
-        <property name="username" value="djfc_comm"/>
-        <property name="password" value="rZZl3jAP"/>
+        <property name="url" value="jdbc:mysql://localhost:3310/test"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
+        <!--<property name="url" value="jdbc:mysql://89.18.180.239:3306/djfc_comm"/>-->
+        <!--<property name="username" value="djfc_comm"/>-->
+        <!--<property name="password" value="rZZl3jAP"/>-->
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
