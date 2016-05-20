@@ -534,9 +534,14 @@
     <profiles>
         <profile>
             <id>dev</id>
-            <executions>
-                <execution>
-                    <id>copy-resources</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
                     <!-- here the phase you need -->
                     <phase>package</phase>
                     <goals>
@@ -554,8 +559,11 @@
                             </resource>
                         </resources>
                     </configuration>
-                </execution>
-            </executions>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
