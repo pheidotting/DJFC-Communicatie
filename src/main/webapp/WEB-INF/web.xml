@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/applicationContext.xml</param-value>
+	</context-param>
+
+	<servlet>
+      <servlet-name>afspraakbeheer</servlet-name>
+      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+		<!--&lt;!&ndash;multipart-config>-->
+            <!--<max-file-size>104857600</max-file-size>-->
+            <!--<max-request-size>20971520</max-request-size>-->
+            <!--<file-size-threshold>5242880</file-size-threshold>-->
+        <!--</multipart-config&ndash;&gt;-->
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>afspraakbeheer</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>

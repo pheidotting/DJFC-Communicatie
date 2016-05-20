@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!--<context:component-scan base-package="nl.lakedigital"/>-->
+
+    <!--<context:annotation-config/>-->
+
+    <!--&lt;!&ndash;<bean id="MariaDbServer" class="nl.lakedigital.djfc.mariadbserver.MariaDBServer" init-method="init">&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="poortNummer" value="3310"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <!--depends-on="MariaDbServer">-->
+        <!--<property name="uniqueResourceName" value="NonXA_DataSource" />-->
+        <!--<property name="minPoolSize" value="2" />-->
+        <!--<property name="maxPoolSize" value="30" />-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+
+        <!--<property name="url" value="jdbc:mysql://localhost:3310/test"/>-->
+        <!--<property name="username" value=""/>-->
+        <!--<property name="password" value=""/>-->
+        <property name="url" value="jdbc:mysql://89.18.180.239:3306/djfc_comm"/>
+        <property name="username" value="djfc_comm"/>
+        <property name="password" value="rZZl3jAP"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>nl.lakedigital.djfc</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--&lt;!&ndash;<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager" >&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory" />&ndash;&gt;-->
+    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tx:annotation-driven transaction-manager="transactionManager" mode="proxy" proxy-target-class="true" />&ndash;&gt;-->
+
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="changeLog" value="classpath:databaseChangeLog.xml"/>
+    </bean>
+
+    <!-- Embedded ActiveMQ
+    <bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
+        <property name="config" value="classpath:activemq.xml" />
+        <property name="start" value="true" />
+    </bean>
+
+    <import resource="applicationContext-jms.xml" />
+    -->
+
+    <!-- Thymeleaf -->
+    <bean id="fileTemplateResolver" class="org.thymeleaf.templateresolver.FileTemplateResolver">
+        <property name="prefix" value="templates/" />
+        <property name="order" value="1" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <property name="cacheTTLMs" value="10000" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="templateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+        <property name="prefix" value="templates/" />
+        <property name="order" value="2" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <property name="cacheTTLMs" value="3600000" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.TemplateEngine" init-method="initialize">
+        <property name="templateResolvers" >
+            <list>
+                <ref bean="fileTemplateResolver"/>
+                <ref bean="templateResolver"/>
+            </list>
+        </property>
+        <!--<property name="messageResolver" ref="messageResolver" />-->
+    </bean>
+</beans>

@@ -1,0 +1,53 @@
+package nl.lakedigital.djfc.service;
+
+
+import com.lowagie.text.DocumentException;
+import nl.lakedigital.djfc.client.oga.BijlageClient;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import java.io.*;
+import java.util.Scanner;
+
+@Service
+public class HtmlToPdfConversieService {
+    private StringBuffer stringBufferOfData;
+    private final static Logger LOGGER = Logger.getLogger(HtmlToPdfConversieService.class);
+
+    private BijlageClient bijlageClient=new BijlageClient();
+
+    public String maakAan(String input) {
+        stringBufferOfData = new StringBuffer();
+
+        String root = bijlageClient.getUploadPad();
+        String bestandsnaam = bijlageClient.genereerBestandsnaam();
+        String outputPDF = root + File.separator+ bestandsnaam +".pdf";
+
+        OutputStream os = null;
+        try {
+            os = new FileOutputStream(new File(outputPDF));
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(input);
+            renderer.layout();
+            renderer.createPDF(os, false);
+            renderer.layout();
+            renderer.writeNextDocument();
+            renderer.finishPDF();
+            os.close();
+            os = null;
+        } catch (IOException | DocumentException e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            if (os != null) {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+        }
+
+        return bestandsnaam;
+    }
+}

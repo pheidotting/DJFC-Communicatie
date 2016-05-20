@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    
+    <changeSet id="1" author="Patrick Heidotting">
+        <createTable tableName="REVINFO">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="timestamp" type="bigint" />
+            <column name="userid" type="bigint" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Patrick Heidotting">
+        <createTable tableName="COMMUNICATIEPRODUCT">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="DATUMTIJDCREATIE" type="datetime" />
+            <column name="DATUMTIJDVERZENDING" type="datetime" />
+            <column name="SOORTENTITEIT" type="varchar(20)" />
+            <column name="ENTITEITID" type="int" />
+            <column name="TEKST" type="text" />
+            <column name="ONDERWERP" type="varchar(255)" />
+            <column name="ANTWOORDOP" type="int" />
+            <column name="MEDEWERKER" type="int" />
+            <column name="DTYPE" type="varchar(50)" />
+        </createTable>
+        <createTable tableName="COMMUNICATIEPRODUCT_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="DATUMTIJDCREATIE" type="datetime" />
+            <column name="DATUMTIJDVERZENDING" type="datetime" />
+            <column name="SOORTENTITEIT" type="varchar(20)" />
+            <column name="ENTITEITID" type="int" />
+            <column name="TEKST" type="text" />
+            <column name="ONDERWERP" type="varchar(255)" />
+            <column name="ANTWOORDOP" type="int" />
+            <column name="MEDEWERKER" type="int" />
+            <column name="DTYPE" type="varchar(50)" />
+        </createTable>
+        <createTable tableName="ONGELEZENINDICATIE">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="EMAIL" type="int" />
+        </createTable>
+        <createTable tableName="ONGELEZENINDICATIE_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="EMAIL" type="int" />
+        </createTable>
+        <createTable tableName="EXTRAINFORMATIE">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="EMAIL" type="int" />
+            <column name="EMAILADRES" type="varchar(50)" />
+            <column name="NAAMAFZENDER" type="varchar(50)" />
+        </createTable>
+        <createTable tableName="EXTRAINFORMATIE_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="EMAIL" type="int" />
+            <column name="EMAILADRES" type="varchar(50)" />
+            <column name="NAAMAFZENDER" type="varchar(50)" />
+        </createTable>
+        <createTable tableName="hibernate_sequence">
+            <column name="next_val" type="bigint(20)"/>
+        </createTable>
+        <insert tableName="hibernate_sequence">
+            <column name="next_val">1</column>
+        </insert>
+        <createTable tableName="EMAILADRES">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="EMAILADRES" type="varchar(255)" />
+            <column name="UITGAANDEEMAIL" type="int" />
+        </createTable>
+        <createTable tableName="EMAILADRES_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="EMAILADRES" type="varchar(255)" />
+            <column name="UITGAANDEEMAIL" type="int" />
+        </createTable>
+        <createTable tableName="BRIEFDOCUMENT">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="DOCUMENT" type="varchar(255)" />
+            <column name="UITGAANDEBRIEF" type="int" />
+        </createTable>
+        <createTable tableName="BRIEFDOCUMENT_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="DOCUMENT" type="varchar(255)" />
+            <column name="UITGAANDEBRIEF" type="int" />
+        </createTable>
+        <createTable tableName="ONVERZONDENINDICATIE">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="UITGAANDEEMAIL" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="ONVERZONDENINDICATIE_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="UITGAANDEEMAIL" type="int" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

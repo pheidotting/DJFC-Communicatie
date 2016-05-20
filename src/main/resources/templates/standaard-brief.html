@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+<span th:text="${kantoor.naam}" /><br />
+<span th:text="${afzenderAdres.straat}" /> <span th:text="${afzenderAdres.huisnummer}" /><span th:text="${afzenderAdres.toevoeging}" /><br />
+<span th:text="${afzenderAdres.postcode}" /> <span th:text="${afzenderAdres.plaats}" /><br />
+<br />
+<span th:text="${relatieNaam}" /><br />
+<span th:text="${geadresseerdeAdres.straat}" /> <span th:text="${geadresseerdeAdres.huisnummer}" /><span th:text="${geadresseerdeAdres.toevoeging}" /><br />
+<span th:text="${geadresseerdeAdres.postcode}" /> <span th:text="${geadresseerdeAdres.plaats}" /><br />
+<br />
+<span th:text="${afzenderAdres.plaats}" />, <span th:text="${#dates.format(#dates.createNow(),'dd-MM-YYYY')}" /><br />
+<br />
+Betreft: <span th:text="${uitgaandeBrief.onderwerp}" /> <br />
+<br />
+<span th:text="${uitgaandeBrief.tekst}" />
+</body>
+</html>
