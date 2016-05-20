@@ -5,7 +5,7 @@ import org.easymock.EasyMockSupport;
 import org.easymock.*;
 import org.junit.*;
 import org.junit.runner.RunWith;
-
+@Ignore
 @RunWith(EasyMockRunner.class)
 public class HtmlToPdfConversieServiceTest extends EasyMockSupport {
     @TestSubject
