@@ -386,6 +386,7 @@
                     <stopKey>STOP</stopKey>
                     <webAppConfig>
                         <contextPath>/pa</contextPath>
+                        <descriptor>src/main/resources/web-local.xml</descriptor>
                     </webAppConfig>
                 </configuration>
                 <executions>

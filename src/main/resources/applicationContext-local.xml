@@ -4,36 +4,16 @@
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <!--<context:component-scan base-package="nl.lakedigital" />-->
-
-    <!--<context:annotation-config/>-->
-
-    <bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>file:app.properties</value>
-            </list>
-        </property>
-        <property name="placeholderPrefix" value="${"/>
+    <bean id="MariaDbServer" class="nl.lakedigital.djfc.mariadbserver.MariaDBServer" init-method="init">
+        <property name="poortNummer" value="3310"/>
     </bean>
 
-    <!--&lt;!&ndash;<bean id="MariaDbServer" class="nl.lakedigital.djfc.mariadbserver.MariaDBServer" init-method="init">&ndash;&gt;-->
-    <!--&lt;!&ndash;<property name="poortNummer" value="3310" />&ndash;&gt;-->
-    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
-
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <!--depends-on="MariaDbServer">-->
-        <!--<property name="uniqueResourceName" value="NonXA_DataSource" />-->
-        <!--<property name="minPoolSize" value="2" />-->
-        <!--<property name="maxPoolSize" value="30" />-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" depends-on="MariaDbServer">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 
-        <!--<property name="url" value="jdbc:mysql://localhost:3310/test" />-->
-        <!--<property name="username" value="" />-->
-        <!--<property name="password" value="" />-->
-        <property name="url" value="${comm.db.name}"/>
-        <property name="username" value="${comm.db.user}"/>
-        <property name="password" value="${comm.db.pass}"/>
+        <property name="url" value="jdbc:mysql://localhost:3310/test"/>
+        <property name="username" value=""/>
+        <property name="password" value=""/>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -73,25 +53,25 @@
 
     <!-- Thymeleaf -->
     <bean id="fileTemplateResolver" class="org.thymeleaf.templateresolver.FileTemplateResolver">
-        <property name="prefix" value="templates/" />
-        <property name="order" value="1" />
-        <property name="suffix" value=".html" />
-        <property name="templateMode" value="HTML5" />
-        <property name="cacheTTLMs" value="10000" />
-        <property name="characterEncoding" value="UTF-8" />
+        <property name="prefix" value="templates/"/>
+        <property name="order" value="1"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheTTLMs" value="10000"/>
+        <property name="characterEncoding" value="UTF-8"/>
     </bean>
 
     <bean id="templateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
-        <property name="prefix" value="templates/" />
-        <property name="order" value="2" />
-        <property name="suffix" value=".html" />
-        <property name="templateMode" value="HTML5" />
-        <property name="cacheTTLMs" value="3600000" />
-        <property name="characterEncoding" value="UTF-8" />
+        <property name="prefix" value="templates/"/>
+        <property name="order" value="2"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheTTLMs" value="3600000"/>
+        <property name="characterEncoding" value="UTF-8"/>
     </bean>
 
     <bean id="templateEngine" class="org.thymeleaf.TemplateEngine" init-method="initialize">
-        <property name="templateResolvers" >
+        <property name="templateResolvers">
             <list>
                 <ref bean="fileTemplateResolver"/>
                 <ref bean="templateResolver"/>
