@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -62,21 +64,17 @@ public class CommunicatieProductRepository {
     }
 
     public void verwijder(List<CommunicatieProduct> communicatieProducts) {
-        if (getTransaction().getStatus() != TransactionStatus.ACTIVE) {
-            getTransaction().begin();
-        }
+        getTransaction();
 
         for (CommunicatieProduct communicatieProduct : communicatieProducts) {
             getSession().delete(communicatieProduct);
         }
 
-        getTransaction().commit();
+        getTransaction();
     }
 
     public void opslaan(List<CommunicatieProduct> communicatieProducts) {
-        if (getTransaction().getStatus() != TransactionStatus.ACTIVE) {
-            getTransaction().begin();
-        }
+        getTransaction();
 
         for (CommunicatieProduct communicatieProduct : communicatieProducts) {
             LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(communicatieProduct, ToStringStyle.SHORT_PREFIX_STYLE));
@@ -88,22 +86,18 @@ public class CommunicatieProductRepository {
         }
 
         getTransaction().commit();
-        getSession().close();
     }
-    public void opslaan(CommunicatieProduct communicatieProduct) {
-        if (getTransaction().getStatus() != TransactionStatus.ACTIVE) {
-            getTransaction().begin();
-        }
-
-            LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(communicatieProduct, ToStringStyle.SHORT_PREFIX_STYLE));
-            if (communicatieProduct.getId() == null) {
-                getSession().save(communicatieProduct);
-            } else {
-                getSession().merge(communicatieProduct);
-            }
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void opslaan(final CommunicatieProduct communicatieProduct) {
+        getTransaction();
+                    LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(communicatieProduct, ToStringStyle.SHORT_PREFIX_STYLE));
+                    if (communicatieProduct.getId() == null) {
+                        getSession().save(communicatieProduct);
+                    } else {
+                        getSession().merge(communicatieProduct);
+                }
 
         getTransaction().commit();
-        getSession().close();
     }
 
     public CommunicatieProduct lees(Long id) {

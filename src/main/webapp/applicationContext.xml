@@ -17,20 +17,11 @@
         <property name="placeholderPrefix" value="${"/>
     </bean>
 
-    <!--&lt;!&ndash;<bean id="MariaDbServer" class="nl.lakedigital.djfc.mariadbserver.MariaDBServer" init-method="init">&ndash;&gt;-->
-    <!--&lt;!&ndash;<property name="poortNummer" value="3310" />&ndash;&gt;-->
-    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
-
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <!--depends-on="MariaDbServer">-->
         <!--<property name="uniqueResourceName" value="NonXA_DataSource" />-->
         <!--<property name="minPoolSize" value="2" />-->
         <!--<property name="maxPoolSize" value="30" />-->
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-
-        <!--<property name="url" value="jdbc:mysql://localhost:3310/test" />-->
-        <!--<property name="username" value="" />-->
-        <!--<property name="password" value="" />-->
         <property name="url" value="${comm.db.name}"/>
         <property name="username" value="${comm.db.user}"/>
         <property name="password" value="${comm.db.pass}"/>
