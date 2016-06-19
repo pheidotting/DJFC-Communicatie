@@ -27,8 +27,36 @@ public class CommunicatieProductService {
     @Inject
     private MaakBriefService maakBriefService;
 
-    private RelatieClient relatieClient = new RelatieClient();
-    private AdresClient adresClient = new AdresClient();
+    private RelatieClient relatieClient = new RelatieClient(8080);
+    private AdresClient adresClient = new AdresClient(8081);
+
+    public void markeerAlsGelezen(Long id) {
+        LOGGER.debug("Markeer als gelezen {}", id);
+
+        IngaandeEmail email = (IngaandeEmail) communicatieProductRepository.lees(id);
+
+        email.setOngelezenIndicatie(null);
+
+        communicatieProductRepository.opslaan(email);
+    }
+
+    public CommunicatieProduct lees(Long id) {
+        return communicatieProductRepository.lees(id);
+    }
+
+    public void verstuur(Long id) {
+        CommunicatieProduct communicatieProduct = communicatieProductRepository.lees(id);
+
+        LOGGER.debug("Klaarzetten om te versturen : {}", ReflectionToStringBuilder.toString(communicatieProduct, ToStringStyle.SHORT_PREFIX_STYLE));
+
+        if (communicatieProduct instanceof UitgaandeEmail) {
+            OnverzondenIndicatie onverzondenIndicatie = new OnverzondenIndicatie();
+            onverzondenIndicatie.setUitgaandeEmail((UitgaandeEmail) communicatieProduct);
+            ((UitgaandeEmail) communicatieProduct).setOnverzondenIndicatie(onverzondenIndicatie);
+        }
+
+        communicatieProductRepository.opslaan(communicatieProduct);
+    }
 
     public void opslaan(List<CommunicatieProduct> communicatieProducts) {
         communicatieProductRepository.opslaan(communicatieProducts);

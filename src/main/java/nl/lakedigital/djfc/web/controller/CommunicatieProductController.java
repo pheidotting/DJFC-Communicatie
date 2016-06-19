@@ -49,14 +49,29 @@ public class CommunicatieProductController {
     @ResponseBody
     public Long nieuwCommunicatieProduct(@RequestBody OpslaanCommunicatieProduct opslaanCommunicatieProduct) {
         LOGGER.debug("Opslaan {}", ReflectionToStringBuilder.toString(opslaanCommunicatieProduct, ToStringStyle.SHORT_PREFIX_STYLE));
-        return communicatieProductService.maakCommunicatieProduct(opslaanCommunicatieProduct.getId(), CommunicatieProductService.SoortCommunicatieProduct.valueOf(opslaanCommunicatieProduct.getSoortCommunicatieProduct().name()),//
+
+        CommunicatieProductService.SoortCommunicatieProduct soort = null;
+        if (opslaanCommunicatieProduct.getSoortCommunicatieProduct() != null) {
+            soort = CommunicatieProductService.SoortCommunicatieProduct.valueOf(opslaanCommunicatieProduct.getSoortCommunicatieProduct().name());
+        }
+
+        return communicatieProductService.maakCommunicatieProduct(opslaanCommunicatieProduct.getId(), //
+                soort,//
                 opslaanCommunicatieProduct.getParentid(), opslaanCommunicatieProduct.getTekst(), opslaanCommunicatieProduct.getOnderwerp(), null, opslaanCommunicatieProduct.getMedewerker());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/versturen/{id}")
     @ResponseBody
     public void versturen(@PathVariable Long id) {
+        LOGGER.debug("Klaarzetten om te versturen, CommunicatieProduct met id {}", id);
 
+        communicatieProductService.verstuur(id);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/markeerAlsGelezen/{id}")
+    @ResponseBody
+    public void markeerAlsGelezen(@PathVariable Long id) {
+        communicatieProductService.markeerAlsGelezen(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/leesmails")
@@ -77,5 +92,10 @@ public class CommunicatieProductController {
         communicatieProductService.markeerOmTeVerzenden(id);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
+    @ResponseBody
+    public JsonCommunicatieProduct lees(@PathVariable("id") Long id) {
+        return mapper.map(communicatieProductService.lees(id), JsonCommunicatieProduct.class);
+    }
 
 }

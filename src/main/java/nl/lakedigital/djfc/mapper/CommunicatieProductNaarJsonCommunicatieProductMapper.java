@@ -1,6 +1,5 @@
 package nl.lakedigital.djfc.mapper;
 
-import nl.lakedigital.djfc.client.dejonge.RelatieClient;
 import nl.lakedigital.djfc.client.oga.AdresClient;
 import nl.lakedigital.djfc.commons.json.*;
 import nl.lakedigital.djfc.domain.*;
@@ -11,15 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Component
 public class CommunicatieProductNaarJsonCommunicatieProductMapper extends AbstractMapper<CommunicatieProduct, JsonCommunicatieProduct> implements JsonMapper {
     private final static Logger LOGGER = LoggerFactory.getLogger(CommunicatieProductNaarJsonCommunicatieProductMapper.class);
     private final String datumTijdFormaat = "yyyy-MM-dd HH:mm";
 
-    private AdresClient adresClient=new AdresClient();
+    private AdresClient adresClient=new AdresClient(8081);
 
     @Override
     public JsonCommunicatieProduct map(CommunicatieProduct communicatieProduct, Object parent, Object bestaandObject) {

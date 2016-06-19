@@ -8,15 +8,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import java.io.*;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @Service
 public class HtmlToPdfConversieService {
     private StringBuffer stringBufferOfData;
     private final static Logger LOGGER = LoggerFactory.getLogger(HtmlToPdfConversieService.class);
 
-    private BijlageClient bijlageClient=new BijlageClient();
+    private BijlageClient bijlageClient = new BijlageClient(8081);
 
     public String maakAan(String input) {
         stringBufferOfData = new StringBuffer();

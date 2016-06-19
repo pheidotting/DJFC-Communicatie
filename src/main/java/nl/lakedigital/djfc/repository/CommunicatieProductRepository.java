@@ -15,8 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -87,7 +85,6 @@ public class CommunicatieProductRepository {
 
         getTransaction().commit();
     }
-    @Transactional(propagation = Propagation.REQUIRED)
     public void opslaan(final CommunicatieProduct communicatieProduct) {
         getTransaction();
                     LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(communicatieProduct, ToStringStyle.SHORT_PREFIX_STYLE));
@@ -134,4 +131,5 @@ public class CommunicatieProductRepository {
         getSession().delete(communicatieProduct);
 
         getTransaction().commit();
-    }}
+    }
+}

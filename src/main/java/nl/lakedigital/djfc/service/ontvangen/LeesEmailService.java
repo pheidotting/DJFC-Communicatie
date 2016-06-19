@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.mail.util.MimeMessageParser;
+import org.joda.time.LocalDateTime;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,6 @@ import javax.mail.*;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -55,7 +55,7 @@ public class LeesEmailService {
 
     @Inject
     private CommunicatieProductRepository communicatieProductRepository;
-    private BijlageClient bijlageClient=new BijlageClient();
+    private BijlageClient bijlageClient = new BijlageClient(8081);
 
     public List<CommunicatieProduct> leesMails() {
         List<CommunicatieProduct> lijst = new ArrayList<>();
@@ -115,7 +115,9 @@ public class LeesEmailService {
                         bijlage.setSoortEntiteit("COMMUNICATIEPRODUCT");
                         bijlage.setOmschrijvingOfBestandsNaam(data.getName());
 
-                        bijlages.add(bijlage);
+                        if (bijlage.getOmschrijvingOfBestandsNaam() != null) {
+                            bijlages.add(bijlage);
+                        }
                     }
                 }
 
@@ -150,6 +152,8 @@ public class LeesEmailService {
 
                 String naam = message.getFrom()[0].toString().replace(emailadres, "").replace("<", "").replace(">", "").trim();
                 ingaandeEmail.getExtraInformatie().setNaamAfzender(naam);
+
+                ingaandeEmail.setDatumTijdVerzending(new LocalDateTime(message.getReceivedDate()));
 
                 String afzenderNaam = message.getFrom()[0].toString().replace(ingaandeEmail.getExtraInformatie().getEmailadres(), "").replace("<>", "").trim();
                 LOGGER.debug("Afzender {}", afzenderNaam);

@@ -9,7 +9,6 @@ import nl.lakedigital.djfc.commons.json.*;
 import nl.lakedigital.djfc.domain.BriefDocument;
 import nl.lakedigital.djfc.domain.UitgaandeBrief;
 import nl.lakedigital.djfc.repository.CommunicatieProductRepository;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -34,11 +32,11 @@ public class MaakBriefService {
     @Inject
     private HtmlToPdfConversieService htmlToPdfConversieService;
 
-    private KantoorClient kantoorClient = new KantoorClient();
-    private MedewerkerClient medewerkerClient = new MedewerkerClient();
-    private RelatieClient relatieClient = new RelatieClient();
-    private AdresClient adresClient = new AdresClient();
-    private BijlageClient bijlageClient = new BijlageClient();
+    private KantoorClient kantoorClient = new KantoorClient(8080);
+    private MedewerkerClient medewerkerClient = new MedewerkerClient(8080);
+    private RelatieClient relatieClient = new RelatieClient(8080);
+    private AdresClient adresClient = new AdresClient(8081);
+    private BijlageClient bijlageClient = new BijlageClient(8081);
 
     public void verzend(UitgaandeBrief uitgaandeBrief) {
             Context context = new Context();
