@@ -17,6 +17,7 @@ import org.thymeleaf.context.Context;
 
 import javax.inject.Inject;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -31,12 +32,16 @@ public class MaakBriefService {
     private TemplateEngine templateEngine;
     @Inject
     private HtmlToPdfConversieService htmlToPdfConversieService;
-
-    private KantoorClient kantoorClient = new KantoorClient(8080);
-    private MedewerkerClient medewerkerClient = new MedewerkerClient(8080);
-    private RelatieClient relatieClient = new RelatieClient(8080);
-    private AdresClient adresClient = new AdresClient(8081);
-    private BijlageClient bijlageClient = new BijlageClient(8081);
+    @Inject
+    private KantoorClient kantoorClient;
+    @Inject
+    private MedewerkerClient medewerkerClient;
+    @Inject
+    private RelatieClient relatieClient;
+    @Inject
+    private AdresClient adresClient;
+    @Inject
+    private BijlageClient bijlageClient;
 
     public void verzend(UitgaandeBrief uitgaandeBrief) {
             Context context = new Context();
@@ -87,7 +92,7 @@ public class MaakBriefService {
             bijlage.setSoortEntiteit("COMMUNICATIEPRODUCT");
             bijlage.setEntiteitId(uitgaandeBrief.getId());
             bijlage.setOmschrijvingOfBestandsNaam(uitgaandeBrief.getOnderwerp());
-            bijlageClient.opslaan(newArrayList(bijlage));
+        bijlageClient.opslaan(newArrayList(bijlage), 0L, UUID.randomUUID().toString());
 
             BriefDocument briefDocument = new BriefDocument();
             briefDocument.setBriefDocument(bijlage.getBestandsNaam());

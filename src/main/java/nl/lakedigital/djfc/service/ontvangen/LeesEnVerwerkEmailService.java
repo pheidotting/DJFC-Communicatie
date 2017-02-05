@@ -25,8 +25,8 @@ public class LeesEnVerwerkEmailService {
     private LeesEmailService leesEmailService;
     @Inject
     private CommunicatieProductService communicatieProductService;
-
-    private RelatieClient relatieClient = new RelatieClient(8080);
+    @Inject
+    private RelatieClient relatieClient;
 
     public void leesEnVerwerkEmails() {
         List<CommunicatieProduct> mails = leesEmailService.leesMails();

@@ -27,8 +27,10 @@ public class CommunicatieProductService {
     @Inject
     private MaakBriefService maakBriefService;
 
-    private RelatieClient relatieClient = new RelatieClient(8080);
-    private AdresClient adresClient = new AdresClient(8081);
+    @Inject
+    private RelatieClient relatieClient;
+    @Inject
+    private AdresClient adresClient;
 
     public void markeerAlsGelezen(Long id) {
         LOGGER.debug("Markeer als gelezen {}", id);

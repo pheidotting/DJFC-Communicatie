@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;
@@ -55,7 +56,8 @@ public class LeesEmailService {
 
     @Inject
     private CommunicatieProductRepository communicatieProductRepository;
-    private BijlageClient bijlageClient = new BijlageClient(8081);
+    @Inject
+    private BijlageClient bijlageClient;
 
     public List<CommunicatieProduct> leesMails() {
         List<CommunicatieProduct> lijst = new ArrayList<>();
@@ -100,11 +102,11 @@ public class LeesEmailService {
                     for (DataSource data : mmp.getAttachmentList()) {
                         String bestandsnaam = bijlageClient.genereerBestandsnaam();
                         String uploadPad = bijlageClient.getUploadPad();
-                        LOGGER.debug("bestandsnaam {}",bestandsnaam);
-                        LOGGER.debug("uploadPad {}",uploadPad);
+                        LOGGER.debug("bestandsnaam {}", bestandsnaam);
+                        LOGGER.debug("uploadPad {}", uploadPad);
 
                         if (data.getName() != null && !"".equals(data.getName())) {
-                            File postacert = new File(uploadPad + File.separator+bestandsnaam);
+                            File postacert = new File(uploadPad + File.separator + bestandsnaam);
                             FileOutputStream output = new FileOutputStream(postacert);
                             IOUtils.copy(data.getInputStream(), output);
                             IOUtils.closeQuietly(output);
@@ -159,16 +161,17 @@ public class LeesEmailService {
                 LOGGER.debug("Afzender {}", afzenderNaam);
 
                 communicatieProductRepository.opslaan(ingaandeEmail);
-                if(!bijlages.isEmpty()){
-                bijlageClient.opslaan(newArrayList(transform(bijlages, new Function<JsonBijlage, JsonBijlage>() {
-                    @Nullable
-                    @Override
-                    public JsonBijlage apply(@Nullable JsonBijlage jsonBijlage) {
-                         jsonBijlage.setEntiteitId(ingaandeEmail.getId());
+                if (!bijlages.isEmpty()) {
+                    bijlageClient.opslaan(newArrayList(transform(bijlages, new Function<JsonBijlage, JsonBijlage>() {
+                        @Nullable
+                        @Override
+                        public JsonBijlage apply(@Nullable JsonBijlage jsonBijlage) {
+                            jsonBijlage.setEntiteitId(ingaandeEmail.getId());
 
-                        return jsonBijlage;
-                    }
-                })));}
+                            return jsonBijlage;
+                        }
+                    })), 0L, UUID.randomUUID().toString());
+                }
 
                 message.setFlag(Flags.Flag.DELETED, true);
 

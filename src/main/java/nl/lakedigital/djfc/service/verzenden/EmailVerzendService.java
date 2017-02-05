@@ -37,13 +37,16 @@ public class EmailVerzendService extends AbstractVerzendService {
     private String mailHost = "localhost";
     private Integer smtpPort = 2170;
 
-    private MedewerkerClient medewerkerClient = new MedewerkerClient(8080);
-    private KantoorClient kantoorClient = new KantoorClient(8080);
-    private RelatieClient relatieClient = new RelatieClient(8080);
-
+    @Inject
+    private MedewerkerClient medewerkerClient;
+    @Inject
+    private KantoorClient kantoorClient;
+    @Inject
+    private RelatieClient relatieClient;
     @Inject
     private CommunicatieProductRepository communicatieProductRepository;
-    private BijlageClient bijlageClient = new BijlageClient(8081);
+    @Inject
+    private BijlageClient bijlageClient;
 
     @Override
     public boolean isVoorMij(CommunicatieProduct communicatieProduct) {

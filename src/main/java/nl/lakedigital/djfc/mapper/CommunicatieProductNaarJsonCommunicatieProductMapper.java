@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Component
@@ -16,7 +17,8 @@ public class CommunicatieProductNaarJsonCommunicatieProductMapper extends Abstra
     private final static Logger LOGGER = LoggerFactory.getLogger(CommunicatieProductNaarJsonCommunicatieProductMapper.class);
     private final String datumTijdFormaat = "yyyy-MM-dd HH:mm";
 
-    private AdresClient adresClient=new AdresClient(8081);
+    @Inject
+    private AdresClient adresClient;
 
     @Override
     public JsonCommunicatieProduct map(CommunicatieProduct communicatieProduct, Object parent, Object bestaandObject) {
