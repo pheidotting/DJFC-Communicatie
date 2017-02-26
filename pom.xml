@@ -110,7 +110,7 @@
         <dependency>
             <groupId>nl.lakedigital.djfc</groupId>
             <artifactId>djfc-clients</artifactId>
-            <version>5.23</version>
+            <version>5.24</version>
         </dependency>
 
 
