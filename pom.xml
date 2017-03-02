@@ -489,20 +489,16 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>com.lazerycode.jmeter</groupId>-->
-            <!--<artifactId>jmeter-maven-plugin</artifactId>-->
-            <!--<version>1.10.1</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>jmeter-tests</id>-->
-            <!--<phase>integration-test</phase>-->
-            <!--<goals>-->
-            <!--<goal>jmeter</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <includes>
+                        <include>nl.lakedigital.*</include>
+                    </includes>
+                </configuration>
+            </plugin>
         </plugins>
         <finalName>communicatie</finalName>
     </build>
