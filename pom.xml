@@ -105,12 +105,12 @@
         <!--<dependency>-->
         <!--<groupId>nl.lakedigital.djfc</groupId>-->
         <!--<artifactId>djfc-commons</artifactId>-->
-        <!--<version>5.34</version>-->
+        <!--<version>5.36-SNAPSHOT</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>nl.lakedigital.djfc</groupId>
             <artifactId>djfc-clients</artifactId>
-            <version>5.53</version>
+            <version>5.55-SNAPSHOT</version>
         </dependency>
 
 
